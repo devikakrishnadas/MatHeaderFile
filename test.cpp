@@ -1,25 +1,21 @@
-#include "matrix.h"
 #include<iostream>
 #include<stdlib.h>
-using namespace std;
+#include "matrix.h"
+#include "matrix.cpp"
 
 int main()
-{
-    cout<<"Enter r,c "<<endl;
+{ 
+    std::cout<<"Enter r,c "<<std::endl;
     int r,c;
-    cin>>r>>c;
-    Mat<int>mat(r,c); 
-    for(int i=0;i<r;i++)
-    {
-        for(int j=0;j<c;j++)
-        {
-            int x;
-            cin>>x;
-            mat.setElem(i,j,x);
-        }
-    }
-    cout<<mat.getRow()<<" "<<mat.getCol()<<endl;
-    cout<<"hello"<<endl;
-    mat.PrintMat();
+    std::cin>>r>>c;
+    Mat<int>mat(r,c);    
+    std::cin>>mat;
+    Mat<int> add(mat);
+    Mat<int> mul(mat);
+    add+=mat;
+    std::cout<<"addition : "<<add<<std::endl;
+    mul*=mat.transpose();
+    std::cout<<"transpose : "<<mat.transpose()<<std::endl;
+    std::cout<<"mult : "<<mul<<std::endl;
     return 0;
 }

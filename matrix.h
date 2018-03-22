@@ -1,11 +1,9 @@
-//#pragma once
+#pragma once
 #ifndef MATRIX_H
 #define MATRIX_H
-#include<iosfwd>
-#include<stdlib.h>
-using namespace std;
+#include<iostream>
 
-template<typename T>
+template<class T>
 class Mat
 {
     private :
@@ -28,8 +26,6 @@ class Mat
     //set val
     void setElem(int r,int c, T val);
 
-    //print
-    void PrintMat();
 
     //getters
     int getRow() const { return row; }
@@ -37,13 +33,14 @@ class Mat
     int getVal(int r,int c) const { return this->matrix[r][c]; }
 
     //operators
-    Mat operator+( const Mat<T> &m)  ;
-    Mat operator*( const Mat<T> &m)  ;
-
-    //Mat operator*(T val);
+    Mat operator+( const Mat<T> &m);
+    Mat operator*( const Mat<T> &m);
+    Mat operator=( const Mat<T> &m);
+    Mat transpose();
     void operator+=(const  Mat &m);
     void operator*=(const  Mat &m);
 };
+
 
 
 

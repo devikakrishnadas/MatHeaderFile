@@ -1,24 +1,7 @@
 #include<iostream>
-#include "matrix.h"
 #include<stdlib.h>
-#include<bits/stdc++.h>
-using namespace std;
+#include "matrix.h"
 
-
-template<class T>
-void Mat<T>::PrintMat()
-{
-    cout<<"enter"<<endl;
-    for(int i=0;i<row;i++)
-    {
-        for(int j=0;j<col;j++)
-        {
-            cout<<getVal(i,j)<<" ";
-        }
-        cout<<endl;
-    }
-    cout<<endl;
-}
 
 template<class T>
 void Mat<T>::allocate()
@@ -61,6 +44,10 @@ template<class T>
 
 Mat<T>::Mat( const Mat<T> &m)
 {
+    
+    row=m.getRow();
+    col=m.getCol();
+    allocate();
     for(int i=0;i<m.getRow();i++)
     {
         for(int j=0;j<m.getCol();j++)
@@ -68,12 +55,71 @@ Mat<T>::Mat( const Mat<T> &m)
             matrix[i][j] = m.getVal(i,j);
         }
     }
+    
+
+    /*Mat<T> temp(m.getRow(),m.getCol());
+    for(int i=0;i<m.getRow();i++)
+    {
+        for(int j=0;j<m.getCol();j++)
+        {
+            temp.setElem(i,j,m.getVal(i,j));
+        }
+    }
+    std::swap(temp,*this);
+    */
 }
 template<class T>
 
 void Mat<T>::setElem(int r,int c,T val)
 {
     matrix[r][c]=val;
+}
+
+template<class T>
+
+std::ostream & operator<<( std::ostream& os, const Mat<T>&m )
+{
+    for(int i=0;i<m.getRow();i++)
+    {
+        for(int j=0;j<m.getCol();j++)
+        {
+            os<<m.getVal(i,j)<<" ";
+        }
+        os<<std::endl;
+    }
+    return os;
+}
+
+template<class T>
+
+std::istream & operator>>( std::istream& os, Mat<T>&m )
+{
+    for(int i=0;i<m.getRow();i++)
+    {
+        for(int j=0;j<m.getCol();j++)
+        {
+            int x;
+            os>>x;
+            m.setElem(i,j,x);
+        }
+    }
+    return os;
+}
+
+template<class T>
+
+Mat<T> Mat<T>::operator=(const Mat<T> &m)
+{
+    row = m.getRow();
+    col = m.getCol();
+    allocate();
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrix[i][j] = m.getVal(i,j);
+        }
+    }
 }
 template<class T>
 
@@ -84,9 +130,7 @@ Mat<T> Mat<T>::operator+(const Mat<T> &m)
     {
         for(int j=0;j<col;j++)
         {
-            T temp = m.getVal(i,j);
-            T ans = this->matrix[i][j] + temp;
-            result.setElem(i,j,ans);
+            result.setElem(i,j,m.getVal(i,j)+matrix[i][j]);
         }
     }
     return result;
@@ -95,15 +139,14 @@ template<class T>
 
 Mat<T> Mat<T>::operator*( const Mat<T> &m)   
 {
-    T result(row,col);
+    Mat<T> result(row,m.getCol());
     for(int i=0;i<row;i++)
     {
         for(int j=0;j<m.getCol();j++)
         {
-            result[i][j]=0;
             for(int k=0;k<m.getRow();k++)
             {
-                result[i][j] += matrix[i][k] * m.getVal(k,j);
+                result.setElem(i,j, result.getVal(i,j) + matrix[i][k] * m.getVal(k,j) );
             }
         }
     }
@@ -113,26 +156,32 @@ template<class T>
 
 void Mat<T>::operator+=(const Mat<T> &m)
 {
-    for(int i=0;i<row;i++)
-    {
-        for(int j=0;j<col;j++)
-        {
-            matrix[i][j] = matrix[i][j] + m.getVal(i,j);
-        }
-    }
+    Mat<T>temp(m);
+    temp = (temp + temp);
+    std::swap(temp,*this);
 }
 
 template<class T>
 
 void Mat<T>::operator*=(const Mat<T> &m)
 {
+    Mat<T>temp(*this);
+    temp = temp * m;
+    std::swap(temp,*this);
+}
+
+template<class T>
+
+Mat<T> Mat<T>::transpose()
+{
+    Mat<T> temp(col,row);
     for(int i=0;i<row;i++)
     {
         for(int j=0;j<col;j++)
         {
-            matrix[i][j] = matrix[i][j] * m.getVal(i,j);
+            temp.setElem(j,i,matrix[i][j]);
         }
-//        cout<<endl;
     }
+    return temp;
 }
 
