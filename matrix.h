@@ -1,7 +1,6 @@
 #pragma once
 #ifndef MATRIX_H
 #define MATRIX_H
-#include<iostream>
 
 template<class T>
 class Mat
@@ -22,6 +21,7 @@ class Mat
     Mat(int r,int c);
     Mat(int r,int c,T val);
     Mat(const Mat<T> &m);
+    Mat();
 
     //set val
     void setElem(int r,int c, T val);

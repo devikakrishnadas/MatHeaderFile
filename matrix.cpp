@@ -1,9 +1,10 @@
-#include<iostream>
-#include<stdlib.h>
-#include "matrix.h"
-
-
 template<class T>
+Mat<T>::Mat()
+{
+
+}
+template<class T>
+
 void Mat<T>::allocate()
 {
     matrix = (T**)malloc(row * sizeof(T *));
@@ -55,18 +56,6 @@ Mat<T>::Mat( const Mat<T> &m)
             matrix[i][j] = m.getVal(i,j);
         }
     }
-    
-
-    /*Mat<T> temp(m.getRow(),m.getCol());
-    for(int i=0;i<m.getRow();i++)
-    {
-        for(int j=0;j<m.getCol();j++)
-        {
-            temp.setElem(i,j,m.getVal(i,j));
-        }
-    }
-    std::swap(temp,*this);
-    */
 }
 template<class T>
 
