@@ -19,12 +19,15 @@ void routine(Mat<int> &m,int sz)
     high_resolution_clock::time_point t4 = high_resolution_clock::now();
     mul*=m;
     high_resolution_clock::time_point t5 = high_resolution_clock::now();
+    m = m.transpose();
+    high_resolution_clock::time_point t6 = high_resolution_clock::now();
 
     std::cout<<"Time taken for functions when size is "<<sz<<" :"<<std::endl;
     std::cout<<"+  : "<<(int)std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count()<<std::endl;
     std::cout<<"*  : "<<(int)std::chrono::duration_cast<std::chrono::microseconds>(t3-t2).count()<<std::endl;
     std::cout<<"+= : "<<(int)std::chrono::duration_cast<std::chrono::microseconds>(t4-t3).count()<<std::endl;
     std::cout<<"*= : "<<(int)std::chrono::duration_cast<std::chrono::microseconds>(t5-t4).count()<<std::endl;
+    std::cout<<"Transpose :"<<(int)std::chrono::duration_cast<std::chrono::microseconds>(t6-t5).count()<<std::endl;
 }
 int main()
 {
